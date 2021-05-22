@@ -1,0 +1,47 @@
+import java.util.*;
+import java.io.*;
+
+public class Main
+{
+    static int[] callMethod(int n, int[] A, int[] B){
+        /*
+        for(int i=0; i<n; i++){                 //with division & T.C=O(n^2), S.C=O(1)
+            int x=1;
+            for(int j=0; j<n; j++){
+                x*=A[j];
+            }
+            B[i]=x/A[i];
+        }*/
+        
+        B[0]=1;                                 //without division & T.C=O(n), S.C=(1)
+        for(int i=1; i<n; i++){
+            B[i]=B[i-1]*A[i-1];
+        }
+        int temp=1;
+        for(int i=n-2; i>=0; i--){
+            B[i]*=A[i+1]*temp;
+            temp*=A[i+1];
+        }
+        
+        return B;
+    }
+
+	public static void main(String[] args) {
+
+		int n;
+        Scanner s = new Scanner(System.in);
+        System.out.println("Enter the array length: ");
+        n = s.nextInt();
+        int[] A = new int[n];
+        System.out.println("Enter the elements of the list: ");
+        for(int i=0; i<n; i++){
+            A[i]=s.nextInt();
+        }
+        
+        System.out.println(Arrays.toString(A));
+        
+        int[] B = new int[n];
+        B = callMethod(n, A, B);
+        System.out.println(Arrays.toString(B));
+	}
+}
